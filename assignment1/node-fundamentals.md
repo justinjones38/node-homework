@@ -28,5 +28,6 @@ const {add, multiply} = require("./utils.js")
 ```js
 // Exporting files
 export {add, multiply}
+// Importing files
 import {add, multiply} from "./utils.js"
 ``` 
