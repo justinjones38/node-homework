@@ -8,11 +8,29 @@ if (!fs.existsSync(sampleFilesDir)) {
 }
 
 // OS module
-
+console.log("Platform", os.platform())
+console.log("CPU", os.cpus()[0].model)
+console.log("Total Memory", os.totalmem())
 
 // Path module
+console.log("Joined Path", (path.join(__filename)))
+
 
 // fs.promises API
+async function readPromise() {
+  const { promisify } = require("util");
+  const readFile = promisify(fs.readFile);
+  const writeFile = promisify(fs.writeFile);
+  try {
+    await writeFile("sample-files/demo.txt", "Hello from the fs.promises")
+    const content = await readFile("./sample-files/demo.txt", "utf-8")
+    console.log("fs.promises read:", content)
+  } catch(err) {
+    console.log("No file content found")
+  }
+}
+
+readPromise()
 
 
 // Streams for large files- log first 40 chars of each chunk
