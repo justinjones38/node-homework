@@ -20,7 +20,9 @@ console.log("Joined Path", (path.join(__filename)))
 async function readPromise() {
   const { promisify } = require("util");
   const readFile = promisify(fs.readFile);
+  const writeFile = promisify(fs.writeFile);
   try {
+    await writeFile("sample-files/demo.txt", "Hello from the fs.promises")
     const content = await readFile("./sample-files/demo.txt", "utf-8")
     console.log("fs.promises read:", content)
   } catch(err) {

@@ -2,7 +2,7 @@ const fs = require("fs");
 const path = require("path");
 
 // Write a sample file for demonstration
-fs.writeFileSync("./sample-files/sample.txt", "Hello async world!");
+fs.writeFileSync("./sample-files/sample.txt", "Hello, async world!");
 
 // 1. Callback style
 fs.readFile("./sample-files/sample.txt", "utf8", (err, content) => {

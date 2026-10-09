@@ -8,5 +8,5 @@ console.log('Platform:', process.platform);
 
 
 // Attach a custom property to global and log it
-globalThis.customVar = 'Hello global';
+globalThis.customVar = 'Hello, global!';
 console.log('Custom global variable:', globalThis.customVar)
