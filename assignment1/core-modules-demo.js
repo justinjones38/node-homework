@@ -8,12 +8,12 @@ if (!fs.existsSync(sampleFilesDir)) {
 }
 
 // OS module
-console.log("Platform", os.platform())
-console.log("CPU", os.cpus()[0].model);
-console.log("Total Memory", os.totalmem());
+console.log("Platform:", os.platform())
+console.log("CPU:", os.cpus()[0].model);
+console.log("Total Memory:", os.totalmem());
 
 // Path module
-console.log(path.join(__dirname, "core-modules-demo.js"))
+console.log("Joined Path:", path.join(__dirname, "core-modules-demo.js"))
 
 // fs.promises API
 async function getSampleFile() {
@@ -21,7 +21,7 @@ async function getSampleFile() {
   try {
     await fs.writeFile("sample-files/demo.txt", "Hello from fs.promises!");
     const content = await fs.readFile("sample-files/demo.txt", "utf8");
-    console.log("fs.promises read", content)
+    console.log("fs.promises read:", content)
   } catch(err) {
     console.log(err.message)
   }

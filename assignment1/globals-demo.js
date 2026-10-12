@@ -4,7 +4,7 @@ console.log('__filename:', __filename);
 
 
 // Log process ID and platform
-console.log('Proccess ID:', process.pid);
+console.log('Process ID:', process.pid);
 console.log('Platform:', process.platform);
 
 // Attach a custom property to global and log it
