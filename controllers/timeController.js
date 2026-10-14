@@ -5,7 +5,7 @@ function getTime(req, res) {
 }
 
 function echoBody(req, res) {
-  res.status(202).json({
+  res.status(200).json({
     weReceived: req.body,
   });
 }
