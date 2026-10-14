@@ -29,7 +29,7 @@ const server = http.createServer((req, res) => {
   }
 
   else if (req.method === "GET" && req.url === "/timePage") {
-    res.writeHead(200, {"Content-Type": "text/html charset=utf8"})
+    res.writeHead(200, {"Content-Type": "text/html; charset=utf-8"})
     res.end(htmlString)
   }
   else if (req.method === "POST" && req.url === "/echo") {
@@ -39,7 +39,7 @@ const server = http.createServer((req, res) => {
     })
     req.on("end", () => {
       const parsedData = JSON.parse(data);
-      res.writeHead(202, {"Content-Type": "application/json"} )
+      res.writeHead(200, {"Content-Type": "application/json"} )
       res.end(JSON.stringify({
         weReceived: parsedData
       }))
