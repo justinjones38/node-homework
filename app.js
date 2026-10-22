@@ -13,3 +13,7 @@ app.use("/api/users");
 
 app.use(notFound)
 app.use(errorHandler)
+
+app.listen(2000, () => console.log("Port running"))
+
+module.exports = {app, server}
