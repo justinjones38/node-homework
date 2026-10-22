@@ -1,6 +1,9 @@
-const {register, logon, logoff} = require("../controllers/userController")
-const {app} = require("../app") 
+const { register, logon, logoff } = require("../controllers/userController");
 
-app.post("/register", register)
-app.post("/logon", logon)
-app.post("/logoff", logoff)
+const router = express.Router()
+
+router.post("/register", register);
+router.post("/logon", logon);
+router.post("/logoff", logoff);
+
+module.exports = router;
