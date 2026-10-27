@@ -1,5 +1,18 @@
+const {userSchema} = require("../validation/userSchema")
+
+
 function register(req, res) {
-  const {name, email, password} = req.body;
+  const {error, value} = userSchema.validate(req.body, {
+    abortEarly: false
+  });
+
+  if (error) {
+    return res.status(400).json({
+      message: "Cannot register"
+    })
+  }  
+
+  const {name, email, password} = value;
   const user = {
     name,
     email,
