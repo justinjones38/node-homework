@@ -1,6 +1,6 @@
 const express = require("express");
 const app = express();
-const authMiddleware = require("./middleware");
+const authMiddleware = require("./middleware/auth");
 const taskRouter = require("./routes/taskRoutes");
 const router = require("./routes/userRoutes");
 const { errorHandler } = require("./middleware/error-handler");

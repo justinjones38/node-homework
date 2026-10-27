@@ -4,4 +4,8 @@ function auth(req, res) {
       message: "Unauthorized",
     });
   }
+  next()
 }
+
+module.exports = {auth}
+

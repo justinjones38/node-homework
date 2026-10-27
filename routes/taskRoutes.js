@@ -3,8 +3,10 @@ const {create, index, show, update, deleteTask} = require("../controllers/taskCo
 
 const router = express.Router();
 
-router.post("/api/tasks", create);
-router.get("/api/tasks", index);
-router.get("/api/tasks/:id", show);
-router.patch("/api/tasks/:id", update);
-router.delete("/api/tasks/:id", deleteTask);
+router.post("/", create);
+router.get("/", index);
+router.get("/:id", show);
+router.patch("/:id", update);
+router.delete("/:id", deleteTask);
+
+module.exports = {router};

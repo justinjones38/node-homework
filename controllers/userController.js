@@ -30,7 +30,7 @@ async function register(req, res) {
   }  
 
   const {name, email, password} = value;
-  const hashedPassword = await(value.password)
+  const hashedPassword = await hashedPassword(value.password)
   const newUser = {
     name,
     email,

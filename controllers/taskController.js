@@ -28,7 +28,7 @@ function create(req, res) {
   global.tasks.push(newTask);
   const {userId, ...sanitizedTask} = newTask;
 
-  return res.status(201).json(newTask)
+  return res.status(201).json(sanitizedTask)
 }
 
 function index(req, res) {
@@ -39,7 +39,7 @@ function index(req, res) {
     })
   }
   const sanitizedTasks = tasks.map(task => {
-    const {userId, sanitizedTask} = task;
+    const {userId, ...sanitizedTask} = task;
     return sanitizedTask
   })
   return res.status(200).json(sanitizedTasks);
@@ -59,12 +59,12 @@ function show(req, res) {
       message: "No matching task found"
     })
   }
-  const {userId, sanitizedTask} = task
+  const {userId, ...sanitizedTask} = task
   return res.status(200).json(sanitizedTask)
 }
 
 function update(req, res) {
-  const {error, value} = patchTaskSchema(req.body, {
+  const {error, value} = patchTaskSchema.validate(req.body, {
     abortEarly: false
   })
 
@@ -101,7 +101,7 @@ function deleteTask(req, res) {
       message: "Task id is not valid"
     })
   }
-  const index = global.tasks.findIndex(task => taskId === task.id && task.id === global.user_id.email);
+  const index = global.tasks.findIndex(task => taskId === task.id && task.userId === global.user_id.email);
   if(index === -1) {
     return res.status(404).json({
       message: "No matching task exist"
