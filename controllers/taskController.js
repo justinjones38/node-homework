@@ -44,3 +44,21 @@ function index(req, res) {
   })
   return res.status(200).json(sanitizedTasks);
 }
+
+function show(req, res) {
+  const taskId = parseInt(req.params?.id);
+  if(!taskId) {
+    return res.status(400).json({
+      message: "Task Id is not valid"
+    })
+  }
+
+  const task = global.tasks.find(task => task.id === taskId && task.userId === global.user_id.email);
+  if(!task) {
+    return res.status(404).json({
+      message: "No matching task found"
+    })
+  }
+  const {userId, sanitizedTask} = task
+  return res.status(200).json(sanitizedTask)
+}
