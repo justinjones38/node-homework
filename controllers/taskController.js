@@ -62,3 +62,35 @@ function show(req, res) {
   const {userId, sanitizedTask} = task
   return res.status(200).json(sanitizedTask)
 }
+
+function update(req, res) {
+  const {error, value} = patchTaskSchema(req.body, {
+    abortEarly: false
+  })
+
+  if(error) {
+    return res.status(400).json({
+      message: "Cannot validate email"
+    })
+  }
+
+  const taskId = parseInt(req.params.id);
+  if(!taskId) {
+    return res.status(400).json({
+      message: "Cannot find find task id"
+    })
+  }
+
+  const task = global.tasks.find(task => task.id === taskId && global.tasks.userId === global.user_id.email);
+  if(!task) {
+    return res.status(404).json({
+      message: "No matching task found"
+    })
+  }
+
+  Object.assign(task, value);
+
+  const {userId, ...sanitizedTask} = task
+  return res.status(200).json(sanitizedTask)
+}
+
