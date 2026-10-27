@@ -9,4 +9,4 @@ router.get("/:id", show);
 router.patch("/:id", update);
 router.delete("/:id", deleteTask);
 
-module.exports = {router};
+module.exports = router;

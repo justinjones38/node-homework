@@ -1,4 +1,4 @@
-function auth(req, res) {
+function auth(req, res, next) {
   if (!global.user_id) {
     return res.status(401).json({
       message: "Unauthorized",
@@ -7,5 +7,5 @@ function auth(req, res) {
   next()
 }
 
-module.exports = {auth}
+module.exports = auth
 
