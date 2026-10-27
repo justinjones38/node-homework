@@ -31,3 +31,16 @@ function create(req, res) {
   return res.status(201).json(newTask)
 }
 
+function index(req, res) {
+  const tasks = global.tasks.filter(task => task.userId === global.user_id.email);
+  if(!tasks.length) {
+    return res.status(404).json({
+      message: "No tasks available"
+    })
+  }
+  const sanitizedTasks = tasks.map(task => {
+    const {userId, sanitizedTask} = task;
+    return sanitizedTask
+  })
+  return res.status(200).json(sanitizedTasks);
+}
