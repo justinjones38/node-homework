@@ -97,7 +97,7 @@ function update(req, res) {
 function deleteTask(req, res) {
   const taskId = parseInt(req.params.id);
   if(!taskId) {
-    res.status(400).json({
+    return res.status(400).json({
       message: "Task id is not valid"
     })
   }
