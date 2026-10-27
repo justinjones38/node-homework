@@ -81,7 +81,7 @@ function update(req, res) {
     })
   }
 
-  const task = global.tasks.find(task => task.id === taskId && global.tasks.userId === global.user_id.email);
+  const task = global.tasks.find(task => task.id === taskId && task.userId === global.user_id.email);
   if(!task) {
     return res.status(404).json({
       message: "No matching task found"
@@ -94,3 +94,23 @@ function update(req, res) {
   return res.status(200).json(sanitizedTask)
 }
 
+function deleteTask(req, res) {
+  const taskId = parseInt(req.params.id);
+  if(!taskId) {
+    res.status(400).json({
+      message: "Task id is not valid"
+    })
+  }
+  const index = global.tasks.findIndex(task => taskId === task.id && task.id === global.user_id.email);
+  if(index === -1) {
+    return res.status(404).json({
+      message: "No matching task exist"
+    })
+  }
+
+  global.tasks.splice(index, 1);
+
+  const {userId, ...sanitizedTask} = globalTask[index];
+
+  return res.status(200).json(sanitizedTask)
+}
