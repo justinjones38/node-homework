@@ -114,3 +114,5 @@ function deleteTask(req, res) {
 
   return res.status(200).json(sanitizedTask)
 }
+
+module.exports = {create, index, show, update, deleteTask}
