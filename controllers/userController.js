@@ -37,9 +37,9 @@ async function register(req, res) {
   } catch (e) {
     // the email might already be registered
     if (e.code === "23505") {
-      // this means the unique constraint for email was violated
-      // here you return the 400 and the error message.  Use a return statement, so that
-      // you don't keep going in this function
+      return res.status(400).json({
+        message: "Cannot register"
+      })
     }
     return next(e); // all other errors get passed to the error handler
   }
