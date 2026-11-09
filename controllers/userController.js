@@ -34,6 +34,7 @@ async function register(req, res) {
       VALUES ($1, $2, $3) RETURNING id, email, name`,
       [value.email, value.name, value.hashed_password],
     ); // note that you use a parameterized query
+    global.user_id =result.rows[0]
   } catch (e) {
     // the email might already be registered
     if (e.code === "23505") {
@@ -43,12 +44,11 @@ async function register(req, res) {
     }
     return next(e); // all other errors get passed to the error handler
   }
-  const user = result.rows[0];
   // otherwise user now contains the new user.  You can return a 201 and the appropriate
   // object.  Be sure to also set global.user_id with the id of the user record you just created.
   return res.status(201).json({
-    name: user.name,
-    email: user.email,
+    name: result.rows[0].name,
+    email: result.rows[0].email,
   });
 }
 
@@ -61,7 +61,7 @@ async function logon(req, res) {
     return res.status(401).json({ error: "Email and/or password not found" });
   }
   const goodCredentials =
-    user && (await comparePassword(password, result.rows[0].hashed_password));
+    result.rows[0] && (await comparePassword(password, result.rows[0].hashed_password));
   if (!goodCredentials) {
     return res.status(401).json({
       message: "Email/Password not correct",
