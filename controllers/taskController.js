@@ -39,7 +39,7 @@ async function index(req, res) {
     "SELECT id, title, is_completed FROM tasks WHERE user_id = $1",
     [global.user_id],
   );
-  const tasks = result.rows[0];
+  const tasks = result.rows;
 
   const sanitizedTasks = tasks.map((task) => {
     const { user_id, ...sanitizedTask } = task;
@@ -57,7 +57,7 @@ async function show(req, res) {
   }
 
   const result = await pool.query(
-    "DELETE * FROM tasks WHERE user_id = $1 AND task_id = $2",
+    "SELECT * FROM tasks WHERE user_id = $1 AND task_id = $2",
     [global.user_id, taskId],
   );
 
@@ -85,15 +85,6 @@ async function update(req, res) {
   if (!taskId) {
     return res.status(400).json({
       message: "Cannot find find task id",
-    });
-  }
-
-  const task = global.tasks.find(
-    (task) => task.id === taskId && task.userId === global.user_id.email,
-  );
-  if (!task) {
-    return res.status(404).json({
-      message: "No matching task found",
     });
   }
 
