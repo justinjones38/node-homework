@@ -112,7 +112,7 @@ async function deleteTask(req, res) {
     });
   }
   const result = await pool.query(
-    "DELETE() FROM tasks WHERE user_id = $1 AND task_id = $2",
+    "DELETE FROM tasks WHERE user_id = $1 AND task_id = $2",
     [global.user_id, taskId],
   );
 
