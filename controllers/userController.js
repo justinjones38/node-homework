@@ -34,7 +34,7 @@ async function register(req, res) {
       VALUES ($1, $2, $3) RETURNING id, email, name`,
       [value.email, value.name, value.hashed_password],
     ); // note that you use a parameterized query
-    global.user_id =result.rows[0]
+    global.user_id =result.rows[0].id
   } catch (e) {
     // the email might already be registered
     if (e.code === "23505") {
