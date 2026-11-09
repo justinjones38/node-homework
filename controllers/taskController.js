@@ -39,6 +39,12 @@ async function index(req, res) {
     "SELECT id, title, is_completed FROM tasks WHERE user_id = $1",
     [global.user_id],
   );
+  if(result.rows.length === 0) {
+    return res.status(404).json({
+      message: "No tasks available"
+    })
+  }
+
   const tasks = result.rows;
 
   const sanitizedTasks = tasks.map((task) => {
@@ -57,8 +63,8 @@ async function show(req, res) {
   }
 
   const result = await pool.query(
-    "SELECT * FROM tasks WHERE user_id = $1 AND task_id = $2",
-    [global.user_id, id],
+    "SELECT * FROM tasks WHERE user_id = $1 AND id = $2",
+    [global.user_id, taskId],
   );
 
   if (!result.rows[0]) {
@@ -98,7 +104,13 @@ async function update(req, res) {
   WHERE id = ${idParm} AND user_id = ${userParm} RETURNING id, title, is_completed`,
     [...Object.values(value), req.params.id, global.user_id],
   );
+
   const updatedTask = result.rows[0];
+  if (!result.rows[0]) {
+    return res.status(404).json({
+      message: "No matching task exist",
+    });
+  }
 
   const { user_id, ...sanitizedTask } = updatedTask;
   return res.status(200).json(sanitizedTask);
@@ -112,7 +124,7 @@ async function deleteTask(req, res) {
     });
   }
   const result = await pool.query(
-    "DELETE FROM tasks WHERE user_id = $1 AND task_id = $2",
+    "DELETE FROM tasks WHERE user_id = $1 AND id = $2 RETURNING id",
     [global.user_id, taskId],
   );
 
