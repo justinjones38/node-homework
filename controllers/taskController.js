@@ -58,7 +58,7 @@ async function show(req, res) {
 
   const result = await pool.query(
     "SELECT * FROM tasks WHERE user_id = $1 AND task_id = $2",
-    [global.user_id, taskId],
+    [global.user_id, id],
   );
 
   if (!result.rows[0]) {
@@ -66,7 +66,7 @@ async function show(req, res) {
       message: "No matching task exist",
     });
   }
-  const { user_id, ...sanitizedTask } = task;
+  const { user_id, ...sanitizedTask } = result.rows[0];
   return res.status(200).json(sanitizedTask);
 }
 
@@ -111,10 +111,10 @@ async function deleteTask(req, res) {
       message: "Task id is not valid",
     });
   }
-
-  const result = await pool.query("DELETE * FROM tasks WHERE user_id = $1", [
-    global.user_id,
-  ]);
+  const result = await pool.query(
+    "DELETE() FROM tasks WHERE user_id = $1 AND task_id = $2",
+    [global.user_id, taskId],
+  );
 
   if (!result.rows[0]) {
     return res.status(404).json({
