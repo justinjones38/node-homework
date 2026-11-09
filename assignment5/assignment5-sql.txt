@@ -3,9 +3,17 @@ SELECT customers.customer_name, AVG(order_totals.total_price) AS average_order_p
 SELECT customer_id FROM customers WHERE customer_name = 'Perez and Sons';
 SELECT employee_id  FROM employees WHERE first_name = 'Miranda' AND last_name = 'Harris';
 SELECT product_id FROM products ORDER BY price ASC LIMIT 5;
-BEGIN;
-INSERT INTO orders (customer_id, employee_id, date) VALUES (CUSTOMER_ID, EMPLOYEE_ID, CURRENT_DATE) RETURNING order_id;
-INSERT INTO line_items (order_id, product_id, quantity, unit_price) SELECT NEW_ORDER_ID, product_id, 1, unit_price FROM products ORDER BY unit_price ASC LIMIT 5;
-COMMIT;
-SELECT * FROM line_items WHERE order_id = NEW_ORDER_ID;
+BEGIN
+INSERT INTO orders (customer_id, employee_id,) VALUES (customer_id, employee_id) RETURNING order_id
+INSERT INTO line_items (order_id, product_id, quantity) VALUES (order_id, 10)
+COMMIT
+SELECT * FROM line_items WHERE order_id = order_id;
 SELECT employees.first_name, employees.last_name, COUNT(orders.order_id) AS order_count FROM employees JOIN orders ON employees.employee_id = orders.employee_id GROUP BY employees.employee_id, employees.first_name, employees.last_name HAVING COUNT(orders.order_id) > 5 ORDER BY employees.last_name;
+
+
+
+
+line_item_id    order_id        product_id      quantity
+1       1       45      6
+2       1       49      20
+3       1       51      11
