@@ -16,9 +16,6 @@ app.use(express.json());
 app.use("/api/users", router);
 app.use("/api/tasks", authMiddleware, taskRouter)
 
-app.use(notFound);
-app.use(errorHandler);
-
 app.get("/health", async (req, res) => {
   try {
     await pool.query("SELECT 1");
@@ -27,6 +24,11 @@ app.get("/health", async (req, res) => {
     res.status(500).json({ message: `db not connected, error: ${ err.message }` });
   }
 });
+
+app.use(notFound);
+app.use(errorHandler);
+
+
 
 const server = app.listen(2000, () => console.log("Port running"));
 let isShuttingDown = false;
