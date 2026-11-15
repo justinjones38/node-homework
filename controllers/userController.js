@@ -2,7 +2,7 @@ const { userSchema } = require("../validation/userSchema");
 const crypto = require("crypto");
 const util = require("util");
 const scrypt = util.promisify(crypto.scrypt);
-const prisma = require("./db/prisma");
+const prisma = require("../db/prisma");
 
 async function hashPassword(password) {
   const salt = crypto.randomBytes(16).toString("hex");
@@ -35,7 +35,7 @@ async function register(req, res) {
   // delete value.password as that doesn't get stored
   try {
     user = await prisma.user.create({
-      data: { name, email, hashedPassword },
+      data: { name: value.name, email: value.email, hashedPassword: value.hashed_password },
       select: { name: true, email: true, id: true }, // specify the column values to return
     });
   } catch (err) {

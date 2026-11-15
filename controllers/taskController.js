@@ -26,8 +26,8 @@ async function create(req, res) {
   const task = await prisma.task.create({
     data: {
       title: value.title,
-      is_completed: value.isCompleted,
-      user_id: global.user_id,
+      isCompleted: value.isCompleted,
+      userId: global.user_id,
     },
     select: { id: true, title: true, is_completed: true }, // specify the column values to return
   });
@@ -135,7 +135,7 @@ async function deleteTask(req, res) {
     const task = await prisma.task.delete({
       where: { userId: global.user_id, id: taskId },
     });
-    const { user_id, ...sanitizedTask } = result.rows[0];
+    const { user_id, ...sanitizedTask } = task;
 
     return res.status(200).json(sanitizedTask);
   } catch (err) {

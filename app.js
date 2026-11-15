@@ -53,9 +53,6 @@ async function shutdown(code = 0) {
     await prisma.$disconnect();
     console.log("Prisma disconnected");
   } catch (err) {
-    if (err.name === "PrismaClientInitializationError") {
-      console.error("Couldn't connect to the database. Is it running?");
-    }
     console.error("Error during shutdown:", err);
     code = 1;
   } finally {
