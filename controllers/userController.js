@@ -41,6 +41,9 @@ async function register(req, res) {
   } catch (err) {
     if (err.name === "PrismaClientKnownRequestError" && err.code === "P2002") {
       // send the appropriate error back -- the email was already registered
+      return res.status(404).json({
+        message: "Duplicate email"
+      })
     } else {
       return next(err); // the error handler takes care of other errors
     }
@@ -65,7 +68,7 @@ async function logon(req, res) {
     return res.status(401).json({ error: "Email and/or password not found" });
   }
   const goodCredentials =
-    user && (await comparePassword(password, user.hashed_password));
+    user && (await comparePassword(password, user.hashedPassword));
   if (!goodCredentials) {
     return res.status(401).json({
       message: "Email/Password not correct",

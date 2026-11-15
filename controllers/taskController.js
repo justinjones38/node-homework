@@ -1,6 +1,6 @@
 const { sanitize } = require("express-xss-sanitizer");
 const { taskSchema, patchTaskSchema } = require("../validation/taskSchema");
-const prisma = require("./db/prisma");
+const prisma = require("../db/prisma");
 
 const taskCounter = (() => {
   let lastTaskNumber = 0;
@@ -29,7 +29,7 @@ async function create(req, res) {
       isCompleted: value.isCompleted,
       userId: global.user_id,
     },
-    select: { id: true, title: true, is_completed: true }, // specify the column values to return
+    select: { id: true, title: true, isCompleted: true }, // specify the column values to return
   });
   // You don't need a try/catch because the global error handler will handle the errors
   const { user_id, ...sanitizedTask } = task;
@@ -139,7 +139,7 @@ async function deleteTask(req, res) {
 
     return res.status(200).json(sanitizedTask);
   } catch (err) {
-    if (!err.code === "P2025") {
+    if (err.code === "P2025") {
       return res.status(404).json({
         message: "No matching task exist",
       });
