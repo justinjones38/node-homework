@@ -158,7 +158,7 @@ async function update(req, res) {
         id: taskId,
         userId: global.user_id,
       },
-      select: { title: true, isCompleted: true, id: true },
+      select: { title: true, isCompleted: true, id: true, priority: true },
     });
     const updatedTask = task;
     if (!updatedTask) {
