@@ -17,7 +17,7 @@ async function comparePassword(inputPassword, storedHash) {
   return crypto.timingSafeEqual(keyBuffer, derivedKey);
 }
 
-async function register(req, res) {
+async function register(req, res, next) {
   const { error, value } = userSchema.validate(req.body, { abortEarly: false });
   if (error) {
     return res.status(400).json({
@@ -40,7 +40,7 @@ async function register(req, res) {
     const result = await prisma.$transaction(async (tx) => {
       // Create user account (similar to Assignment 6, but using tx instead of prisma)
       const newUser = await tx.user.create({
-        data: { email: value.email, name: value.name, hashedPassword: value.hashedPassword },
+        data: { email: value.email, name: value.name, hashedPassword: value.hashed_password },
         select: { id: true, email: true, name: true },
       });
 

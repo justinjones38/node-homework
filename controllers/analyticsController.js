@@ -173,9 +173,9 @@ async function searchTasks(req, res, next) {
   // Hint: The test expects results array, query string, and count number
   res.status(200).json({
     // ... you need to return the response object
-    searchResults,
-    searchQuery,
-    count: searchQuery.length,
+    results: searchResults,
+    query: searchQuery,
+    count: searchResults.length,
   });
 }
 
