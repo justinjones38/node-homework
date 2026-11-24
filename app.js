@@ -6,6 +6,7 @@ const router = require("./routes/userRoutes");
 const { errorHandler } = require("./middleware/error-handler");
 const { notFound } = require("./middleware/not-found");
 const prisma = require("./db/prisma");
+const analyticsRoutes = require("./routes/analyticRoutes");
 
 global.user_id = null;
 global.users = [];
@@ -15,6 +16,7 @@ app.use(express.json());
 
 app.use("/api/users", router);
 app.use("/api/tasks", authMiddleware, taskRouter);
+app.use("/api/analytics", authMiddleware, analyticsRoutes)
 
 app.get("/health", async (req, res) => {
   try {
