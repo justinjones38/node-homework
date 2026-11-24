@@ -105,7 +105,7 @@ async function index(req, res) {
   // Return tasks with pagination information
   res.status(200).json({
     // ... you need to return tasks and pagination
-    sanitizedTasks,
+    tasks: sanitizedTasks,
     pagination,
   });
 }
@@ -228,7 +228,7 @@ const tasks = await prisma.task.findMany({
 });
 
 // Bulk create with validation
-exports.bulkCreate = async (req, res, next) => {
+const bulkCreate = async (req, res, next) => {
   const { tasks } = req.body;
 
   // Validate the tasks array
@@ -273,4 +273,4 @@ exports.bulkCreate = async (req, res, next) => {
   }
 };
 
-module.exports = { create, index, show, update, deleteTask };
+module.exports = { create, index, show, update, deleteTask, bulkCreate};

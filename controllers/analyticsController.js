@@ -1,6 +1,6 @@
 const prisma = require("../db/prisma");
 
-async function getUserAnalytics() {
+async function getUserAnalytics(req, res) {
   // Parse and validate user ID
   const userId = parseInt(req.params.id);
   if (isNaN(userId)) {
@@ -59,7 +59,7 @@ async function getUserAnalytics() {
   });
 }
 
-async function getUsersWithStats() {
+async function getUsersWithStats(req, res, skip, limit, page) {
   // Parse pagination parameters (similar to how you did in the task index method in section 3 above)
   // Hint: Parse page and limit from req.query, calculate skip
 
@@ -115,7 +115,7 @@ async function getUsersWithStats() {
   });
 }
 
-async function searchTasks() {
+async function searchTasks(searchQuery) {
   // Validate search query
   if (!searchQuery || searchQuery.trim().length < 2) {
     return res.status(400).json({ 
@@ -160,7 +160,7 @@ async function searchTasks() {
   // Hint: The test expects results array, query string, and count number
   res.status(200).json({
     // ... you need to return the response object
-    searchResults, searchQuery, count
+    searchResults, searchQuery, count: searchQuery.length
   });
   }
 

@@ -40,7 +40,7 @@ async function register(req, res) {
     const result = await prisma.$transaction(async (tx) => {
       // Create user account (similar to Assignment 6, but using tx instead of prisma)
       const newUser = await tx.user.create({
-        data: { email, name, hashedPassword },
+        data: { email: value.email, name: value.name, hashedPassword: value.hashedPassword },
         select: { id: true, email: true, name: true },
       });
 
