@@ -28,8 +28,9 @@ async function create(req, res) {
       title: value.title,
       isCompleted: value.isCompleted,
       userId: global.user_id,
+      priority: value.priority
     },
-    select: { id: true, title: true, isCompleted: true }, // specify the column values to return
+    select: { id: true, title: true, isCompleted: true, priority: true }, // specify the column values to return
   });
   // You don't need a try/catch because the global error handler will handle the errors
   const { user_id, ...sanitizedTask } = task;
