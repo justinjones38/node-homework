@@ -10,7 +10,7 @@ async function getUserAnalytics(req, res) {
     });
   }
 
-  const user = prisma.user.findUnique({ where: { id: userId } })
+  const user = await prisma.user.findUnique({ where: { id: userId } })
   if (!user) {
     return res.status(404).json({
       message: "No user found"
@@ -128,6 +128,7 @@ async function getUsersWithStats(req, res) {
 }
 
 async function searchTasks(req, res, next) {
+  const searchQuery = req.query.q;
   // Validate search query
   if (!searchQuery || searchQuery.trim().length < 2) {
     return res.status(400).json({
