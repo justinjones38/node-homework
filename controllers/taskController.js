@@ -220,12 +220,12 @@ const getOrderBy = (query) => {
   return { createdAt: "desc" }; // default fallback
 };
 
-// Use in your findMany query
-const tasks = await prisma.task.findMany({
-  where: whereClause,
-  // ... other options
-  orderBy: getOrderBy(req.query),
-});
+// // Use in your findMany query
+// const tasks = await prisma.task.findMany({
+//   where: whereClause,
+//   // ... other options
+//   orderBy: getOrderBy(req.query),
+// });
 
 // Bulk create with validation
 const bulkCreate = async (req, res, next) => {

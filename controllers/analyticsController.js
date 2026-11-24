@@ -10,6 +10,13 @@ async function getUserAnalytics(req, res) {
     });
   }
 
+  const user = prisma.user.findUnique({ where: { id: userId } })
+  if (!user) {
+    return res.status(404).json({
+      message: "No user found"
+    })
+  }
+
   // Use groupBy to count tasks by completion status
   const taskStats = await prisma.task.groupBy({
     by: ["isCompleted"],
